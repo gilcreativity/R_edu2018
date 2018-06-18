@@ -1,0 +1,184 @@
+---
+title: "사전인턴교육_R"
+author: "Presenter: Yun-Gil Jun"
+date: "November 26th 2016"
+output: html_document
+---
+
+>###What is R?
+
+- GPL(General public license: GNU): http://www.r-project.org/
+
+- Comparison of Statistical Packages: http://en.wikipedia.org/wiki/Comparison_of_statistical_packages
+
+>###How to get R
+
+- NexR Corporation, Seoul: http://cran.nexr.com/
+
+- Rstudio : http://www.rstudio.com/products/rstudio/download/
+
+- MRAN : https://mran.microsoft.com/download/
+
+- (for Text mining JAVA : http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html )
+
+>###1. Data Management
+
+use the assignment operator to create new variables: <- 
+Arthmetric Operations: +, -. *, /, ^
+```
+getwd()   # the current working directory
+setwd()   # change to my directory
+ls()      # list the objects in the current working workspace
+example() # show an example of function
+help()    # help about function
+data()    # to see the availabe datasets
+
+```
+
+####data type : scalars, vectors(numerical, character, logical), metrics, arrays, dataframes, lists, factors
+>###2. Examples
+***
+>####2.1 matrix
+```{r}
+a <- c(1, 2, 3, 4, 5, 6)
+mymatrix <- matrix(a, nrow=2, ncol=3)
+mymatrix
+
+```
+***
+>####2.2 data.frame
+```{r}
+a <- c(1,2,3,4)                          # assign numeric vector
+b <- c("red", "white", "red", "black")   # assign character vector
+c <- c(TRUE, TRUE, TRUE, FALSE)          # assign logical vector
+mydata <- data.frame(a,b,c)              # different colums(numeric, character, factor, etc)
+mydata
+
+```
+***
+>####2.3 Variable names
+```{r}
+names(mydata) <- c("number", "color", "passed")
+mydata
+```
+***
+>####2.4 Recall data
+```{r}
+mydata[2:4, 3]
+mydata[c("number", "color")]
+mydata$color  # recall variable data
+```
+***
+>###3. Functions
+***
+####3.1 Function list of package
+```{r}
+# install.packages("plm")
+# library(plm)
+# help(package=plm)
+```
+***
+>#### 3.2 Usefule Functions
+```{}
+length(mydata)              # number of elements
+str(object)                 # structure of an object
+class(object)               # class or type of an object
+names(object)               # names
+c(object, object, ...)      # combine objects into a vector
+cbind(object, object, ...)  # combine objects as columns
+rbind(object, object, ...)  # combine objects as rows
+ls()                        # list current objects
+rm()                        # delete an object
+newobject <- edit(object)   # edit copy and save a new object
+fix(object)                 # edit in place
+
+```
+
+***
+>####3.3 Example
+```{r}
+str(str)
+str(library)
+str(help)
+```
+***
+>###4. Importing Data
+***
+>####4.1 Text File
+```{}
+mydata <- read.table("c:/mydata.csv", header=TRUE, sep=",", row.names="id")
+mydata <- read.csv("c:/mydata.csv", header=TRUE)
+```
+***
+>####4.2 Excel File
+```{}
+library(xlsx)
+mydata <- read.xlsx("c:/myexcel.xlsx", 1)  # first row contains variable names
+mydata <- read.xlsx("c:/myexcel.xlsx", sheetName = "mysheet")
+```
+***
+>####4.3 Getting Information on a Dataset
+```{}
+ls()               # list objects in the working environment
+names(mydata)      # list the variables in mydata
+str(mydata)        # list the structure of mydata
+levels(mydata$v1)  # list levels of factor v1 in mydata
+dim(object)        # dimensions of a object
+class(object)      # class of an object (numeric, matrix, data frame, etc)
+mydata             # print mydata
+head(mydata, n=10) # print first 10 rows of mydata
+tail(mydata, n=5)  # print last 5 rows of mydata
+
+```
+***
+>###5. Data manipulation
+
+***
+>####5.1 Excluding Missing Values
+```{r}
+x <- c(1, 2, NA, 3)
+mean(x)
+mean(x, na.rm=TRUE)
+```
+***
+>####5.2 Date Values
+```{}
+mydata[!complete.cases(mydata),]   # list rows of data that have missing values
+newdata <- na.omit(mydata)         # create new dataset without missing data
+
+```
+
+```{}
+mydates <- as.Date(c("2015-06-22", "2014-02-04" ))  # use. as.Date() to convert strings to dates
+days <- mydates[1] - mydates[2]                     # number of days between 6/22/15 and 2/4/14
+
+```
+```{}
+today <- Sys.Date()     # print today's date
+format(today, format "%B %d %Y")
+```
+See help(as.Date)
+
+***
+
+>###Graph examples
+```{r}
+# library(ggplot2)
+# qplot(diamonds$carat, diamonds$price)
+# qplot(carat, price, data = diamonds)
+# qplot(carat, price, data = diamonds, geom="point", color = clarity)
+# qplot(carat, price, data = diamonds, geom=c("point", "smooth"), method=lm)
+# qplot(carat,data = diamonds, geom="histogram")
+# ggplot(data=diamonds, aes(x=carat, y=price)) + geom_point(aes(color=clarity)) + geom_smooth()
+# ggplot(data=diamonds, aes(x=carat, y=price, color = clarity))+geom_point()+geom_smooth()
+
+```
+```{r}
+library(rgl)
+plot3d(iris$Petal.Width, iris$Sepal.Length, iris$Sepal.Width)
+distMatrix <- as.matrix(dist(iris[,1:4]))
+heatmap(distMatrix, main="heatmap")
+
+```
+
+
