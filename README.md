@@ -1,3 +1,3 @@
 # R_edu2018
 
-> * 2018 R education material based on various open-sources.
+> * This material is for an educational purpose based on various open-sources in 2018.
